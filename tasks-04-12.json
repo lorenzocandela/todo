@@ -1,0 +1,95 @@
+{
+  "days": [
+    {
+      "date": "20/11",
+      "tasks": [
+        { "text": "simulazione parallela nuovi cutoff", "done": true },
+        { "text": "rename pdf schede tecniche validate da serra (codCat_nomeCat.pdf)", "done": true },
+        { "text": "segnare quali pdf non hanno title", "done": true },
+        { "text": "fix duplicati resi (algoritmo)", "done": true },
+        { "text": "insert massivo schede tecniche", "done": true }
+      ]
+    },
+    {
+      "date": "21/11",
+      "tasks": [
+        { "text": "resi va online", "done": true }
+      ]
+    },
+    {
+      "date": "24/11",
+      "tasks": [
+        { "text": "EAU in Procurement", "done": true },
+        { "text": "fix EAU", "done": true },
+        { "text": "logs OEM", "done": true },
+        { "text": "fix process_attesi", "done": true }
+      ]
+    },
+    {
+      "date": "25/11",
+      "tasks": [
+        { "text": "caricamento EAU in Procurement (file input => codice + EAU)", "done": true },
+        { "text": "fix FPDI", "done": true }
+      ]
+    },
+    {
+      "date": "26/11",
+      "tasks": [
+        { "text": "alert vendite EVSAFE", "done": true },
+        { "text": "fix listini concorrenti", "done": true },
+        { "text": "ticket serra: Dare visione alle info tecniche caricate su sito web", "done": true }
+      ]
+    },
+    {
+      "date": "27/11",
+      "tasks": [
+        { "text": "correlati krios", "done": true },
+        { "text": "excel per md de (attivi, sostituiti, obsoleti)", "done": true },
+        { "text": "fix mde", "done": true },
+        { "text": "zip completo foto mensile", "done": true },
+        { "text": "modifiche scheda prodotto", "done": true },
+        { "text": "modifiche urgent order", "done": true },
+        { "text": "modifiche doppio click fast order", "done": true }
+      ]
+    },
+    {
+      "date": "28/11",
+      "tasks": [
+        { "text": "loghi partner sito ev safe", "done": true },
+        { "text": "analytics nct export in excel", "done": true },
+        { "text": "export news ITA", "done": true },
+        { "text": "modifiche cutoff (check stock spedizioni sidat)", "done": true }
+      ]
+    },
+    {
+      "date": "01/12",
+      "tasks": [
+        { "text": "log campio stato assegnazione box matitina (lo facciamo già con potenzio_log_notifica())", "done": true },
+        { "text": "aggiunta ES, DE, FR alle schede tecniche", "done": true }
+      ]
+    },
+    {
+      "date": "02/12",
+      "tasks": [
+        { "text": "rigenerazione delle schede tecniche", "done": true },
+        { "text": "modifiche PDMM ([X]Ordinamento, [X]Link da POT, [X]Clonazione)", "done": true }
+      ]
+    },
+    {
+      "date": "03/12",
+      "tasks": [
+        { "text": "report PDMM", "done": true },
+        { "text": "script con carlo", "done": true }
+      ]
+    },
+    {
+      "date": "04/12",
+      "tasks": [
+        { "text": "fix clona da, prendere dati da esistente POT verso esistente POT (no + mongo)", "done": true },
+        { "text": "fix meat product generazione file (su hoffer manca dim box)", "done": true },
+        { "text": "fix schede tecniche (meno padding su errori, check perchè ogni tanto si balza i title)", "done": true }
+      ]
+    }
+  ],
+  "notes": []
+}
