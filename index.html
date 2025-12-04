@@ -294,7 +294,7 @@
             const addNote = (event) => {
                 const text = event.target.value.trim();
                 if (text) {
-                    notes.value.push(text);
+                    notes.value.unshift(text);
                     event.target.value = '';
                     save();
                 }
