@@ -12,6 +12,7 @@
             ::-webkit-scrollbar { display: none; }
             * { -ms-overflow-style: none; scrollbar-width: none; }
             input::placeholder, textarea::placeholder { color: #6e6e6e !important; opacity: 0.6; }
+            .profilo:hover { border: solid 1px white !important; }
         </style>
         <link rel="manifest" href="manifest.json">
         <link rel="icon" href="data:,">
@@ -129,7 +130,7 @@
                                 <button @click="exitGuestMode" class="text-editor-muted hover:text-editor-text text-xs">accedi</button>
                             </div>
                             <div v-else class="flex items-center gap-2">
-                                <div @click="settingsModal.show = true" class="w-6 h-6 rounded-full bg-editor-keyword flex items-center justify-center text-xs text-white">
+                                <div @click="settingsModal.show = true" style="cursor: pointer !important;" class="profilo w-6 h-6 rounded-full bg-editor-keyword flex items-center justify-center text-xs text-white">
                                     {{ user.email?.charAt(0).toUpperCase() }}
                                 </div>
                                 <button @click="logout" class="text-editor-muted hover:text-editor-text text-xs">esci</button>
@@ -236,7 +237,7 @@
                                 placeholder="Aggiungi dettagli, note, link..."
                             ></textarea>
                             <div v-if="!openaiKey" class="text-editor-muted text-xs mt-2">
-                                <i>per usare AI configura la API key</i>
+                                <i>per AI configura l'API key, cliccando sull'icona del profilo</i>
                             </div>
                         </div>
                         <div class="flex justify-end gap-2 px-4 py-3 border-t border-editor-border">
