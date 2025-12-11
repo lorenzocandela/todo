@@ -11,11 +11,10 @@
             * { font-family: 'Fira Code', monospace; }
             ::-webkit-scrollbar { display: none; }
             * { -ms-overflow-style: none; scrollbar-width: none; }
-            textarea::placeholder {
-                color: #ceccce63;
-            }
+            input::placeholder, textarea::placeholder { color: #6e6e6e !important; opacity: 0.6; }
         </style>
         <link rel="manifest" href="manifest.json">
+        <link rel="icon" href="data:,">
         <meta name="theme-color" content="#1e1e1e">
         <script>
             tailwind.config = {
@@ -113,6 +112,7 @@
             </div>
 
             <template v-if="user || guestMode">
+                <!-- header -->
                 <div class="flex items-center bg-editor-sidebar border-b border-editor-border px-2">
                     <div class="flex items-center gap-2 px-4 py-2 bg-editor-bg border-t-2 border-editor-keyword text-editor-text">
                         <span>to-do</span>
@@ -122,6 +122,7 @@
                         <button @click="carryOverTasks" class="px-2 py-1 hover:bg-editor-line rounded text-editor-muted hover:text-editor-text text-xs">↓ pendenti</button>
                         <button @click="exportData" class="px-2 py-1 hover:bg-editor-line rounded text-editor-muted hover:text-editor-text text-xs">export</button>
                         <button @click="importData" class="px-2 py-1 hover:bg-editor-line rounded text-editor-muted hover:text-editor-text text-xs">import</button>
+                        <button @click="settingsModal.show = true" class="px-2 py-1 hover:bg-editor-line rounded text-editor-muted hover:text-editor-text text-xs">⚙</button>
                         <div class="w-px h-4 bg-editor-border mx-1"></div>
                         <div class="flex items-center gap-2 px-2">
                             <div v-if="guestMode" class="flex items-center gap-2">
@@ -138,6 +139,7 @@
                     </div>
                 </div>
 
+                <!-- main -->
                 <div class="flex">
                     <div class="bg-editor-bg text-editor-muted text-right py-4 select-none w-12 border-r border-editor-border">
                         <div v-for="n in totalLines" :key="n" class="px-3 leading-6">{{ n }}</div>
@@ -168,7 +170,7 @@
 
                             <div class="leading-6 flex items-center text-editor-muted -mx-4 px-4 hover:bg-editor-line/50">
                                 <span class="mr-1">[ ]</span>
-                                <input @keyup.enter="addTask(dayIndex, $event)" class="bg-transparent flex-1 outline-none placeholder-editor-muted/50" placeholder="...">
+                                <input @keyup.enter="addTask(dayIndex, $event)" class="bg-transparent flex-1 outline-none" placeholder="...">
                             </div>
 
                             <div class="leading-6">&nbsp;</div>
@@ -187,11 +189,12 @@
 
                         <div class="leading-6 flex items-center text-editor-muted -mx-4 px-4 hover:bg-editor-line/50">
                             <span class="mr-1">-</span>
-                            <input @keyup.enter="addNote($event)" class="bg-transparent flex-1 outline-none placeholder-editor-muted/50" placeholder="...">
+                            <input @keyup.enter="addNote($event)" class="bg-transparent flex-1 outline-none" placeholder="...">
                         </div>
                     </div>
                 </div>
 
+                <!-- footer -->
                 <div class="fixed bottom-0 left-0 right-0 text-white text-xs flex items-center justify-between px-4 py-1" :class="guestMode ? 'bg-editor-orange/80' : 'bg-editor-keyword/80'">
                     <div class="flex items-center gap-4">
                         <span>{{ totalPending }} pendenti</span>
@@ -207,6 +210,7 @@
                 <div class="h-8"></div>
                 <input type="file" ref="fileInput" @change="handleImport" class="hidden" accept=".json">
 
+                <!-- info task -->
                 <div v-if="detailsModal.show" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" @click.self="closeDetails">
                     <div class="bg-editor-sidebar border border-editor-border rounded-lg w-full max-w-lg">
                         <div class="flex items-center justify-between px-4 py-3 border-b border-editor-border">
@@ -217,17 +221,54 @@
                             <button @click="closeDetails" class="text-editor-muted hover:text-editor-text">✕</button>
                         </div>
                         <div class="p-4">
-                            <label class="text-editor-muted text-xs block mb-2">Dettagli</label>
+                            <div class="flex items-center justify-between mb-2">
+                                <label class="text-editor-muted text-xs">Dettagli</label>
+                                <button @click="generateWithAI" :disabled="aiLoading || !openaiKey" class="flex items-center gap-1 px-2 py-1 text-xs rounded bg-editor-line hover:bg-editor-border text-editor-purple disabled:opacity-50" :title="!openaiKey ? 'configura API key in ⚙' : ''">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                    </svg>
+                                    {{ aiLoading ? 'generando...' : 'genera con AI' }}
+                                </button>
+                            </div>
                             <textarea 
                                 v-model="detailsModal.details" 
                                 class="w-full bg-editor-bg border border-editor-border rounded-lg px-3 py-2 text-editor-text outline-none focus:border-editor-keyword transition resize-none text-xs"
                                 rows="6"
                                 placeholder="Aggiungi dettagli, note, link..."
                             ></textarea>
+                            <div v-if="!openaiKey" class="text-editor-muted text-xs mt-2">
+                                ⚠ per usare AI configura la API key in ⚙
+                            </div>
                         </div>
                         <div class="flex justify-end gap-2 px-4 py-3 border-t border-editor-border">
                             <button @click="closeDetails" class="px-4 py-2 text-editor-muted hover:text-editor-text text-xs">Annulla</button>
                             <button @click="saveDetails" class="px-4 py-2 bg-editor-keyword text-white rounded text-xs hover:bg-editor-keyword/80">Salva</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- settings -->
+                <div v-if="settingsModal.show" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" @click.self="settingsModal.show = false">
+                    <div class="bg-editor-sidebar border border-editor-border rounded-lg w-full max-w-md">
+                        <div class="flex items-center justify-between px-4 py-3 border-b border-editor-border">
+                            <span class="text-editor-text text-xs">⚙ Impostazioni</span>
+                            <button @click="settingsModal.show = false" class="text-editor-muted hover:text-editor-text">✕</button>
+                        </div>
+                        <div class="p-4">
+                            <label class="text-editor-muted text-xs block mb-2">OpenAI API Key</label>
+                            <input 
+                                v-model="settingsModal.apiKey" 
+                                type="password"
+                                class="w-full bg-editor-bg border border-editor-border rounded-lg px-3 py-2 text-editor-text outline-none focus:border-editor-keyword transition text-xs"
+                                placeholder="sk-..."
+                            >
+                            <div class="text-editor-muted text-xs mt-2">
+                                la key viene salvata solo nel tuo browser
+                            </div>
+                        </div>
+                        <div class="flex justify-end gap-2 px-4 py-3 border-t border-editor-border">
+                            <button @click="settingsModal.show = false" class="px-4 py-2 text-editor-muted hover:text-editor-text text-xs">Annulla</button>
+                            <button @click="saveSettings" class="px-4 py-2 bg-editor-keyword text-white rounded text-xs hover:bg-editor-keyword/80">Salva</button>
                         </div>
                     </div>
                 </div>
@@ -309,6 +350,8 @@
                         const days = ref([]);
                         const notes = ref([]);
                         const fileInput = ref(null);
+                        const aiLoading = ref(false);
+                        const openaiKey = ref(localStorage.getItem('openai_api_key') || '');
                         let unsubscribe = null;
 
                         const detailsModal = reactive({
@@ -317,6 +360,11 @@
                             taskIndex: null,
                             task: null,
                             details: ''
+                        });
+
+                        const settingsModal = reactive({
+                            show: false,
+                            apiKey: openaiKey.value
                         });
 
                         const currentDateTime = computed(() => {
@@ -521,6 +569,58 @@
                             closeDetails();
                         };
 
+                        const saveSettings = () => {
+                            openaiKey.value = settingsModal.apiKey;
+                            localStorage.setItem('openai_api_key', settingsModal.apiKey);
+                            settingsModal.show = false;
+                        };
+
+                        const generateWithAI = async () => {
+                            if (!detailsModal.task || !openaiKey.value) return;
+                            
+                            aiLoading.value = true;
+                            const taskTitle = detailsModal.task.text;
+                            const existingDetails = detailsModal.details;
+
+                            let prompt = '';
+                            if (existingDetails.trim()) {
+                                prompt = `Riscrivi e migliora questa descrizione di una task in modo chiaro e conciso (max 2-3 righe).\n\nTitolo task: ${taskTitle}\nDescrizione attuale: ${existingDetails}\n\nRispondi solo con la nuova descrizione, senza prefissi.`;
+                            } else {
+                                prompt = `Genera una breve descrizione (max 2-3 righe) per questa task, spiegando cosa fare in modo chiaro e pratico.\n\nTask: ${taskTitle}\n\nRispondi solo con la descrizione, senza prefissi.`;
+                            }
+
+                            try {
+                                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': `Bearer ${openaiKey.value}`
+                                    },
+                                    body: JSON.stringify({
+                                        model: 'gpt-3.5-turbo',
+                                        messages: [{ role: 'user', content: prompt }],
+                                        max_tokens: 150,
+                                        temperature: 0.7
+                                    })
+                                });
+
+                                if (!response.ok) {
+                                    const err = await response.json();
+                                    throw new Error(err.error?.message || 'errore api');
+                                }
+
+                                const data = await response.json();
+                                if (data.choices && data.choices[0]) {
+                                    detailsModal.details = data.choices[0].message.content.trim();
+                                }
+                            } catch (error) {
+                                console.error('errore ai:', error);
+                                alert('Errore: ' + error.message);
+                            }
+                            
+                            aiLoading.value = false;
+                        };
+
                         const carryOverTasks = () => {
                             const today = formatDate(new Date());
                             let todayDay = days.value.find(d => d.date === today);
@@ -611,11 +711,11 @@
 
                         return {
                             user, guestMode, loading, syncing, authLoading, authError, email, emailSent,
-                            days, notes, currentDateTime, totalPending, totalLines, fileInput, detailsModal,
+                            days, notes, currentDateTime, totalPending, totalLines, fileInput, detailsModal, settingsModal, aiLoading, openaiKey,
                             enterGuestMode, exitGuestMode, loginWithGoogle, sendEmailLink, logout, save,
                             addToday, addTask, toggleTask, removeTask, removeDay, carryOverTasks,
                             addNote, removeNote, exportData, importData, handleImport,
-                            openDetails, closeDetails, saveDetails
+                            openDetails, closeDetails, saveDetails, saveSettings, generateWithAI
                         };
                     }
                 }).mount('#app');

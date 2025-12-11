@@ -1,0 +1,300 @@
+{
+  "days": [
+    {
+      "date": "11/12",
+      "tasks": [
+        {
+          "text": "scadenza 12/12 => phishing e social engineering script",
+          "done": false
+        },
+        {
+          "text": "fix ticket procurement",
+          "done": true
+        },
+        {
+          "text": "loghi ev safe nuovi",
+          "done": true
+        }
+      ]
+    },
+    {
+      "date": "10/12",
+      "tasks": [
+        {
+          "text": "script file zucchetti tabbare come se lo aspetta silvio",
+          "done": true
+        },
+        {
+          "text": "passare da resi per D:/",
+          "done": true
+        },
+        {
+          "text": "implementare script zucchetti in tab amministrazione",
+          "done": true
+        },
+        {
+          "text": "aggiungere tab sotto amministrazione per GUI JGal",
+          "done": true
+        },
+        {
+          "text": "aggiungere GUI JGal anche a Procurement",
+          "done": true
+        },
+        {
+          "text": "fix clona da",
+          "done": true
+        },
+        {
+          "text": "permesso EAU",
+          "done": true
+        },
+        {
+          "text": "edit excel/print se flaggato",
+          "done": true
+        },
+        {
+          "text": "aggiunta legenda alla creazione ticket procurement",
+          "done": true
+        }
+      ]
+    },
+    {
+      "date": "09/12",
+      "tasks": [
+        {
+          "text": "rifare ricerca  e filtraggio lato server",
+          "done": true
+        },
+        {
+          "text": "schede tecniche + rsync",
+          "done": true
+        },
+        {
+          "text": "aggiungere sistema chat ticket procurement",
+          "done": true
+        },
+        {
+          "text": "notifiche mail su ogni cambio di stato",
+          "done": true
+        }
+      ]
+    },
+    {
+      "date": "05/12",
+      "tasks": [
+        {
+          "text": "form invio email clienti (dashboard clienti)",
+          "done": true
+        },
+        {
+          "text": "modifiche ticket Procurement (manca solo filtraggio eliminati/completati)",
+          "done": true
+        },
+        {
+          "text": "togliere debug cutoff",
+          "done": true
+        },
+        {
+          "text": "putty su server pbwin",
+          "done": true
+        }
+      ]
+    },
+    {
+      "date": "04/12",
+      "tasks": [
+        {
+          "text": "fix clona da, prendere dati da esistente POT verso esistente POT (no + mongo)",
+          "done": true
+        },
+        {
+          "text": "fix meat product generazione file (su hoffer manca dim box)",
+          "done": true
+        },
+        {
+          "text": "fix schede tecniche (meno padding su errori, check perchè ogni tanto si balza i title)",
+          "done": true
+        }
+      ]
+    },
+    {
+      "date": "03/12",
+      "tasks": [
+        {
+          "text": "report PDMM",
+          "done": true
+        },
+        {
+          "text": "script con carlo",
+          "done": true
+        }
+      ]
+    },
+    {
+      "date": "02/12",
+      "tasks": [
+        {
+          "text": "rigenerazione delle schede tecniche",
+          "done": true
+        },
+        {
+          "text": "modifiche PDMM ([X]Ordinamento, [X]Link da POT, [X]Clonazione)",
+          "done": true
+        }
+      ]
+    },
+    {
+      "date": "01/12",
+      "tasks": [
+        {
+          "text": "log campio stato assegnazione box matitina (lo facciamo già con potenzio_log_notifica())",
+          "done": true
+        },
+        {
+          "text": "aggiunta ES, DE, FR alle schede tecniche",
+          "done": true
+        }
+      ]
+    },
+    {
+      "date": "28/11",
+      "tasks": [
+        {
+          "text": "loghi partner sito ev safe",
+          "done": true
+        },
+        {
+          "text": "analytics nct export in excel",
+          "done": true
+        },
+        {
+          "text": "export news ITA",
+          "done": true
+        },
+        {
+          "text": "modifiche cutoff (check stock spedizioni sidat)",
+          "done": true
+        }
+      ]
+    },
+    {
+      "date": "27/11",
+      "tasks": [
+        {
+          "text": "correlati krios",
+          "done": true
+        },
+        {
+          "text": "excel per md de (attivi, sostituiti, obsoleti)",
+          "done": true
+        },
+        {
+          "text": "fix mde",
+          "done": true
+        },
+        {
+          "text": "zip completo foto mensile",
+          "done": true
+        },
+        {
+          "text": "modifiche scheda prodotto",
+          "done": true
+        },
+        {
+          "text": "modifiche urgent order",
+          "done": true
+        },
+        {
+          "text": "modifiche doppio click fast order",
+          "done": true
+        }
+      ]
+    },
+    {
+      "date": "26/11",
+      "tasks": [
+        {
+          "text": "alert vendite EVSAFE",
+          "done": true
+        },
+        {
+          "text": "fix listini concorrenti",
+          "done": true
+        },
+        {
+          "text": "ticket serra: Dare visione alle info tecniche caricate su sito web",
+          "done": true
+        }
+      ]
+    },
+    {
+      "date": "25/11",
+      "tasks": [
+        {
+          "text": "caricamento EAU in Procurement (file input => codice + EAU)",
+          "done": true
+        },
+        {
+          "text": "fix FPDI",
+          "done": true
+        }
+      ]
+    },
+    {
+      "date": "24/11",
+      "tasks": [
+        {
+          "text": "EAU in Procurement",
+          "done": true
+        },
+        {
+          "text": "fix EAU",
+          "done": true
+        },
+        {
+          "text": "logs OEM",
+          "done": true
+        },
+        {
+          "text": "fix process_attesi",
+          "done": true
+        }
+      ]
+    },
+    {
+      "date": "21/11",
+      "tasks": [
+        {
+          "text": "resi va online",
+          "done": true
+        }
+      ]
+    },
+    {
+      "date": "20/11",
+      "tasks": [
+        {
+          "text": "simulazione parallela nuovi cutoff",
+          "done": true
+        },
+        {
+          "text": "rename pdf schede tecniche validate da serra (codCat_nomeCat.pdf)",
+          "done": true
+        },
+        {
+          "text": "segnare quali pdf non hanno title",
+          "done": true
+        },
+        {
+          "text": "fix duplicati resi (algoritmo)",
+          "done": true
+        },
+        {
+          "text": "insert massivo schede tecniche",
+          "done": true
+        }
+      ]
+    }
+  ],
+  "notes": []
+}
