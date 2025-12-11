@@ -122,7 +122,6 @@
                         <button @click="carryOverTasks" class="px-2 py-1 hover:bg-editor-line rounded text-editor-muted hover:text-editor-text text-xs">↓ pendenti</button>
                         <button @click="exportData" class="px-2 py-1 hover:bg-editor-line rounded text-editor-muted hover:text-editor-text text-xs">export</button>
                         <button @click="importData" class="px-2 py-1 hover:bg-editor-line rounded text-editor-muted hover:text-editor-text text-xs">import</button>
-                        <button @click="settingsModal.show = true" class="px-2 py-1 hover:bg-editor-line rounded text-editor-muted hover:text-editor-text text-xs">⚙</button>
                         <div class="w-px h-4 bg-editor-border mx-1"></div>
                         <div class="flex items-center gap-2 px-2">
                             <div v-if="guestMode" class="flex items-center gap-2">
@@ -130,7 +129,7 @@
                                 <button @click="exitGuestMode" class="text-editor-muted hover:text-editor-text text-xs">accedi</button>
                             </div>
                             <div v-else class="flex items-center gap-2">
-                                <div class="w-6 h-6 rounded-full bg-editor-keyword flex items-center justify-center text-xs text-white">
+                                <div @click="settingsModal.show = true" class="w-6 h-6 rounded-full bg-editor-keyword flex items-center justify-center text-xs text-white">
                                     {{ user.email?.charAt(0).toUpperCase() }}
                                 </div>
                                 <button @click="logout" class="text-editor-muted hover:text-editor-text text-xs">esci</button>
@@ -237,7 +236,7 @@
                                 placeholder="Aggiungi dettagli, note, link..."
                             ></textarea>
                             <div v-if="!openaiKey" class="text-editor-muted text-xs mt-2">
-                                ⚠ per usare AI configura la API key in ⚙
+                                <i>per usare AI configura la API key</i>
                             </div>
                         </div>
                         <div class="flex justify-end gap-2 px-4 py-3 border-t border-editor-border">
