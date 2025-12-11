@@ -83,7 +83,7 @@
                     </div>
                     <button @click="sendEmailLink" :disabled="authLoading || !email"
                         class="w-full bg-editor-keyword text-white py-3 px-4 rounded-lg hover:bg-editor-keyword/80 transition disabled:opacity-50">
-                        {{ authLoading ? 'Invio...' : 'Invia link magico' }}
+                        {{ authLoading ? 'Invio...' : 'Ricevi codice di accesso' }}
                     </button>
                 </div>
 
@@ -236,10 +236,9 @@
             onSnapshot 
         } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-        // ⚠️ SOSTITUISCI CON LE TUE CREDENZIALI FIREBASE
         const firebaseConfig = {
             apiKey: "AIzaSyCgJSOYYM1pXb73YJVwZuU3G8Edax4RMq8",
-            authDomain: "todo-def41.firebaseapp.com.firebaseapp.com",
+            authDomain: "todo-def41.firebaseapp.com",
             projectId: "todo-def41",
             storageBucket: "todo-def41.firebasestorage.app",
             messagingSenderId: "490528963828",
