@@ -156,7 +156,12 @@
                                 <span v-else class="text-editor-muted">[ ]</span>
                             </button>
                             <input v-model="task.text" @blur="save" :class="task.done ? 'text-editor-muted line-through' : 'text-editor-string'" class="bg-transparent flex-1 outline-none" placeholder="...">
-                            <button @click="removeTask(dayIndex, taskIndex)" class="text-editor-muted hover:text-red-400 opacity-0 group-hover:opacity-100 text-xs ml-2">✕</button>
+                            <button @click="openDetails(dayIndex, taskIndex)" class="text-editor-muted hover:text-editor-keyword opacity-0 group-hover:opacity-100 text-xs ml-2" :class="{ 'text-editor-keyword opacity-100': task.details }">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path>
+                                </svg>
+                            </button>
+                            <button @click="removeTask(dayIndex, taskIndex)" class="text-editor-muted hover:text-red-400 opacity-0 group-hover:opacity-100 text-xs ml-1">✕</button>
                         </div>
 
                         <div class="leading-6 flex items-center text-editor-muted -mx-4 px-4 hover:bg-editor-line/50">
@@ -199,6 +204,31 @@
             </div>
             <div class="h-8"></div>
             <input type="file" ref="fileInput" @change="handleImport" class="hidden" accept=".json">
+
+            <div v-if="detailsModal.show" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" @click.self="closeDetails">
+                <div class="bg-editor-sidebar border border-editor-border rounded-lg w-full max-w-lg">
+                    <div class="flex items-center justify-between px-4 py-3 border-b border-editor-border">
+                        <div class="flex items-center gap-2">
+                            <span class="text-editor-comment">//</span>
+                            <span class="text-editor-text text-xs truncate max-w-xs">{{ detailsModal.task?.text }}</span>
+                        </div>
+                        <button @click="closeDetails" class="text-editor-muted hover:text-editor-text">✕</button>
+                    </div>
+                    <div class="p-4">
+                        <label class="text-editor-muted text-xs block mb-2">Dettagli</label>
+                        <textarea 
+                            v-model="detailsModal.details" 
+                            class="w-full bg-editor-bg border border-editor-border rounded-lg px-3 py-2 text-editor-text outline-none focus:border-editor-keyword transition resize-none text-xs"
+                            rows="6"
+                            placeholder="Aggiungi dettagli, note, link..."
+                        ></textarea>
+                    </div>
+                    <div class="flex justify-end gap-2 px-4 py-3 border-t border-editor-border">
+                        <button @click="closeDetails" class="px-4 py-2 text-editor-muted hover:text-editor-text text-xs">Annulla</button>
+                        <button @click="saveDetails" class="px-4 py-2 bg-editor-keyword text-white rounded text-xs hover:bg-editor-keyword/80">Salva</button>
+                    </div>
+                </div>
+            </div>
         </template>
     </div>
 
@@ -261,7 +291,7 @@
                 .catch((err) => console.log('SW failed:', err));
         }
 
-        const { createApp, ref, computed, onMounted } = Vue;
+        const { createApp, ref, reactive, computed, onMounted } = Vue;
 
         const initApp = () => {
             createApp({
@@ -278,6 +308,14 @@
                     const notes = ref([]);
                     const fileInput = ref(null);
                     let unsubscribe = null;
+
+                    const detailsModal = reactive({
+                        show: false,
+                        dayIndex: null,
+                        taskIndex: null,
+                        task: null,
+                        details: ''
+                    });
 
                     const currentDateTime = computed(() => {
                         const now = new Date();
@@ -433,7 +471,7 @@
                     const addTask = (dayIndex, event) => {
                         const text = event.target.value.trim();
                         if (text) {
-                            days.value[dayIndex].tasks.push({ text, done: false });
+                            days.value[dayIndex].tasks.push({ text, done: false, details: '' });
                             event.target.value = '';
                             save();
                         }
@@ -454,6 +492,31 @@
                             days.value.splice(dayIndex, 1);
                             save();
                         }
+                    };
+
+                    const openDetails = (dayIndex, taskIndex) => {
+                        const task = days.value[dayIndex].tasks[taskIndex];
+                        detailsModal.show = true;
+                        detailsModal.dayIndex = dayIndex;
+                        detailsModal.taskIndex = taskIndex;
+                        detailsModal.task = task;
+                        detailsModal.details = task.details || '';
+                    };
+
+                    const closeDetails = () => {
+                        detailsModal.show = false;
+                        detailsModal.dayIndex = null;
+                        detailsModal.taskIndex = null;
+                        detailsModal.task = null;
+                        detailsModal.details = '';
+                    };
+
+                    const saveDetails = () => {
+                        if (detailsModal.dayIndex !== null && detailsModal.taskIndex !== null) {
+                            days.value[detailsModal.dayIndex].tasks[detailsModal.taskIndex].details = detailsModal.details;
+                            save();
+                        }
+                        closeDetails();
                     };
 
                     const carryOverTasks = () => {
@@ -546,10 +609,11 @@
 
                     return {
                         user, guestMode, loading, syncing, authLoading, authError, email, emailSent,
-                        days, notes, currentDateTime, totalPending, totalLines, fileInput,
+                        days, notes, currentDateTime, totalPending, totalLines, fileInput, detailsModal,
                         enterGuestMode, exitGuestMode, loginWithGoogle, sendEmailLink, logout, save,
                         addToday, addTask, toggleTask, removeTask, removeDay, carryOverTasks,
-                        addNote, removeNote, exportData, importData, handleImport
+                        addNote, removeNote, exportData, importData, handleImport,
+                        openDetails, closeDetails, saveDetails
                     };
                 }
             }).mount('#app');
